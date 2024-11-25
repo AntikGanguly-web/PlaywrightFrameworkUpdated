@@ -1,0 +1,10 @@
+[
+{
+    "ScenarioName": "SER_REG_CM_0001",
+    "RunFlag": "Y"
+},
+{
+    "ScenarioName": "SER_REG_CM_0002",
+    "RunFlag": "N"
+}
+]
