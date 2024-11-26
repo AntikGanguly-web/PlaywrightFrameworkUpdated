@@ -15,6 +15,8 @@ if(scenarioSet.RunFlag === "Y")
 test(`Scenario Executing - ${scenarioSet.ScenarioName}`,async ({browser})=>
 {
     console.log("Hello");
+    console.log("World");
+    console.log("abcd");
     const context = await browser.newContext();
     let page = await context.newPage();
     const OR = new ORHandler(context, page);
