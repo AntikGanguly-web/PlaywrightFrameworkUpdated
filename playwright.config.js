@@ -14,7 +14,7 @@ module.exports = defineConfig({
     {
       use: {
       browserName: "chromium",
-      headless: true, 
+      headless: false, 
       viewport: null,
       launchOptions:{
         args:["--start-maximized"],
