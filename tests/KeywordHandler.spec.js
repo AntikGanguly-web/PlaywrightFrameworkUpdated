@@ -3,9 +3,9 @@ const { test } = require('@playwright/test');
 const { alert } = require('vscode-websocket-alerts');
 const {ORHandler} = require('../HelperClasses/ORHandler')
 const {ActionLibrary} = require('../HelperClasses/ActionLibrary');
-const fs = require('fs');
-const officegen = require('officegen');
-const docx = officegen('docx');
+const Fs = require('fs');
+const Officegen = require('officegen');
+const Docx = Officegen('docx');
 const scenarioSets = JSON.parse(JSON.stringify(require('../utils/ScenarioNumbers.json')));
 
 for(const scenarioSet of scenarioSets)
@@ -83,7 +83,7 @@ for(let k = 0; k<=action.length;k++)
                     break;
                 }
             }
-            let operation = await docx.createP();
+            let operation = await Docx.createP();
             await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
             await operation.addImage(screenshotFilePath, {cx: 600, cy: 250})
             }
@@ -106,7 +106,7 @@ for(let k = 0; k<=action.length;k++)
                         break;
                     }
                 }
-                let operation1 = await docx.createP();
+                let operation1 = await Docx.createP();
                 await operation1.addText(`Screenshot_${action[k]}_${locator[k]}`);
                 await operation1.addImage(screenshotFilePath1, {cx: 600, cy: 250})
                 }
@@ -127,21 +127,21 @@ for(let k = 0; k<=action.length;k++)
                         const newTab = await actLib.onClickTabClose(action[k], ORSheet.obName[m],ORSheet.obRef[m]);
                         page = newTab.page1;
                         await OR.newTab(newTab.page1);
-                        let operation2 = await docx.createP();
+                        let operation2 = await Docx.createP();
                         await operation2.addText(`Screenshot_${action[k]}_${locator[k]}`);
                         await operation2.addImage(newTab.screenshotFilePath, {cx: 600, cy: 250})
                     }
                     else if(locator[k] === "UploadDoc")
                     {
                         const newTab = await actLib.onClickUploadDoc(action[k], ORSheet.obName[m],ORSheet.obRef[m]);
-                        let operation2 = await docx.createP();
+                        let operation2 = await Docx.createP();
                         await operation2.addText(`Screenshot_${action[k]}_${locator[k]}`);
                         await operation2.addImage(newTab, {cx: 600, cy: 250})
                     }
                     else
                     {
                         const newTab = await actLib.onClick(action[k], ORSheet.obName[m], ORSheet.obRef[m]);
-                        let operation2 = await docx.createP();
+                        let operation2 = await Docx.createP();
                         await operation2.addText(`Screenshot_${action[k]}_${locator[k]}`);
                         await operation2.addImage(newTab, {cx: 600, cy: 250})
                     }
@@ -165,7 +165,7 @@ for(let k = 0; k<=action.length;k++)
                     screenshotFilePath3 = await actLib.checkElement(action[k], ORSheet.obName[n], ORSheet.obRef[n]);
                 }
             }
-            let operation3 = await docx.createP();
+            let operation3 = await Docx.createP();
             await operation3.addText(`Screenshot_${action[k]}_${locator[k]}`);
             await operation3.addImage(screenshotFilePath3, {cx: 600, cy: 250})
             }
@@ -179,8 +179,8 @@ for(let k = 0; k<=action.length;k++)
             break;
     }
 }
-        const out = fs.createWriteStream("D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results/Report.docx");
-        docx.generate(out);
+        const out = Fs.createWriteStream("D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results/Report.docx");
+        Docx.generate(out);
         await page.close();
 })
 }
