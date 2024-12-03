@@ -21,7 +21,7 @@ async enterText(action,obName,loc,value)
     const timestamp = currentDate.getTime();
     await expect(this.page.locator(loc)).toBeVisible();
     await expect(this.page.locator(loc)).toBeEditable();
-    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFramework/test-results';
+    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
     const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${obName}_${timestamp}.png`;
     await this.highlightElement(loc);
     let cNum;
@@ -64,7 +64,7 @@ async selectText(action, obName,loc,value)
     const timestamp = currentDate.getTime();
     await expect(this.page.locator(loc)).toBeVisible();
     await expect(this.page.locator(loc)).toBeEditable();
-    const ssfilepath = 'D:/Users/XY50035/OneDrive - Old Mutual/Desktop/PlaywrightFramework/test-results';
+    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
     const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${obName}_${timestamp}.png`;
     await this.highlightElement(loc);
     let cNum;
@@ -99,7 +99,7 @@ async onClick(action, obName, loc)
     const timestamp = currentDate.getTime();
     await expect(this.page.locator(loc)).toBeVisible();
     await expect(this.page.locator(loc)).toBeEnabled();
-    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFramework/test-results';
+    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
     const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${obName}_${timestamp}.png`;
     await this.highlightElement(loc);
     await this.page.locator(loc).click();
@@ -113,7 +113,7 @@ async onClickTabClose(action, obName, loc)
     const timestamp = currentDate.getTime();
     await expect(this.page.locator(loc)).toBeVisible();
     await expect(this.page.locator(loc)).toBeEnabled();
-    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFramework/test-results';
+    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
     const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${obName}_${timestamp}.png`;
     await this.highlightElement(loc);
     const [newPage] = await Promise.all([
@@ -134,7 +134,7 @@ async onClickUploadDoc(action, obName, loc)
     const timestamp = currentDate.getTime();
     await expect(this.page.locator(loc)).toBeVisible();
     await expect(this.page.locator(loc)).toBeEnabled();
-    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFramework/test-results';
+    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
     const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${obName}_${timestamp}.png`;
     await this.highlightElement(loc);
     await this.page.locator(loc).click();
@@ -149,7 +149,7 @@ async checkElement(action, obName, loc)
     const currentDate = new Date();
     const timestamp = currentDate.getTime();
     await expect(this.page.locator(loc)).toBeVisible();
-    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFramework/test-results';
+    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
     const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${obName}_${timestamp}.png`;
     await this.highlightElement(loc);
     await this.page.waitForTimeout(1000);
