@@ -20,7 +20,7 @@ test(`Scenario Executing - ${scenarioSet.ScenarioName}`,async ({browser})=>
     const OR = new ORHandler(context, page);
     const actLib = new ActionLibrary(context, page);
     const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.readFile("D:/Users/XY50035/OneDrive - Old Mutual/Desktop/KeywordOMSA.xlsx");
+    await workbook.xlsx.readFile("D:/Users/XY59004/OneDrive - Old Mutual/Desktop/KeywordOMSA.xlsx");
     const worksheet = workbook.getWorksheet('Keyword');
     let i = 0;
     let j = 0;
@@ -84,12 +84,12 @@ for(let k = 0; k<=action.length;k++)
                 }
             }
             let operation = await docx.createP();
-            await operation.addText(`Screenshot_${action[k]}_${data[0]}`);
+            await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
             await operation.addImage(screenshotFilePath, {cx: 600, cy: 250})
             }
             catch(error)
             {
-                alert(`Exception - ${action[k]}_${data[0]}`);
+                alert(`Exception - ${action[k]}_${locator[k]}`);
                 await page.waitForTimeout(10000);
             }
             break;
@@ -107,12 +107,12 @@ for(let k = 0; k<=action.length;k++)
                     }
                 }
                 let operation1 = await docx.createP();
-                await operation1.addText(`Screenshot_${action[k]}_${data1[0]}`);
+                await operation1.addText(`Screenshot_${action[k]}_${locator[k]}`);
                 await operation1.addImage(screenshotFilePath1, {cx: 600, cy: 250})
                 }
                 catch(error)
                 {
-                    alert(`Exception - ${action[k]}_${data1[0]}`);
+                    alert(`Exception - ${action[k]}_${locator[k]}`);
                     await page.waitForTimeout(10000);
                 }
                 break;
@@ -179,7 +179,7 @@ for(let k = 0; k<=action.length;k++)
             break;
     }
 }
-        const out = fs.createWriteStream("D:/Users/XY50035/OneDrive - Old Mutual/Desktop/PlaywrightFramework/test-results/Report.docx");
+        const out = fs.createWriteStream("D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results/Report.docx");
         docx.generate(out);
         await page.close();
 })

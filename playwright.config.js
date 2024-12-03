@@ -1,6 +1,6 @@
 const { defineConfig } = require('@playwright/test');
-
-
+ 
+ 
 module.exports = defineConfig({
   testDir: './tests',
   timeout: 300*1000,
@@ -14,7 +14,7 @@ module.exports = defineConfig({
     {
       use: {
       browserName: "chromium",
-      headless: false, 
+      headless: false,
       viewport: null,
       launchOptions:{
         args:["--start-maximized"],
