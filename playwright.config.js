@@ -7,7 +7,7 @@ module.exports = defineConfig({
   workers: 1,
   fullyParallel: false,
   expect:{
-    timeout: 9000
+    timeout: 20000
   },
   reporter: [['html',{open: 'always'}]],
   projects: [

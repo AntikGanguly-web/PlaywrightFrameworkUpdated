@@ -177,7 +177,6 @@ async captureSr(action, obName, loc)
     SRNum = SRNum.split(":");
     SRNum = SRNum[1];
     SRNum = SRNum.trim();
-    console.log(SRNum);
     await this.page.screenshot({ path: screenshotFilePath });
     return screenshotFilePath;
 }
