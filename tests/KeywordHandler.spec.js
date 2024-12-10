@@ -20,7 +20,7 @@ test(`Scenario Executing - ${scenarioSet.ScenarioName}`,async ({browser})=>
     const OR = new ORHandler(context, page);
     const actLib = new ActionLibrary(context, page);
     const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.readFile("D:/Users/XY59004/OneDrive - Old Mutual/Desktop/KeywordOMSA.xlsx");
+    await workbook.xlsx.readFile("D:/Users/XY50035/OneDrive - Old Mutual/Desktop/KeywordOMSA.xlsx");
     const worksheet = workbook.getWorksheet('Keyword');
     let i = 0;
     let j = 0;
@@ -175,6 +175,26 @@ for(let k = 0; k<=action.length;k++)
                 await page.waitForTimeout(10000);
             }
             break;
+            case "Capture":
+                try{
+                    let screenshotFilePath2;
+                    for(let n=0;n<ORSheet.obName.length;n++)
+                    {
+                        if(ORSheet.obName[n] === locator[k])
+                        {  
+                            screenshotFilePath2 = actLib.captureSr(action[k],ORSheet.obName[n],ORSheet.obRef[n]);
+                        }
+                    }
+                    let operation4 = await docx.createP();
+                    await operation4.addText(`Screenshot_${action[k]}_${locator[k]}`);
+                    await operation4.addImage(screenshotFilePath2, {cx: 600, cy: 250})
+                    }
+                    catch(error)
+                    {
+                        alert(`Exception - ${action[k]}_${locator[k]}`);
+                        await page.waitForTimeout(10000);
+                    }
+                break;
         default:
             break;
     }
