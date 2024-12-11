@@ -14,7 +14,6 @@ if(scenarioSet.RunFlag === "Y")
 {
 test(`Scenario Executing - ${scenarioSet.ScenarioName}`,async ({browser})=>
 {
-    console.log("Antik Check");
     const context = await browser.newContext();
     let page = await context.newPage();
     const OR = new ORHandler(context, page);
@@ -52,7 +51,25 @@ for(let k = 0; k<=action.length;k++)
     switch (action[k]) {
         case "Navigate":
             try{
-                ORSheet = await OR.getORSheet(locator[k]);
+                if(locator[k]==="ServiceDashBoardOpen")
+                {
+                    const newTab = await actLib.tabChange(action[k],locator[k])
+                    page = newTab.page1
+                    ORSheet = newTab.ORSheet
+                }
+                else if(locator[k]==="ServiceDashBoardClose")
+                {
+                    const newTab = await actLib.tabChangeGL(action[k],locator[k])
+                    page = newTab.page1
+                    ORSheet = newTab.ORSheet
+                }
+                else
+                {
+                    ORSheet = await OR.getORSheet(locator[k]);
+                } 
+                let operation4 = await docx.createP();
+                await operation4.addText(`Screenshot_${action[k]}_${locator[k]}`);
+                await operation4.addImage(newTab.screenshotFilePath, {cx: 600, cy: 250})
             }
             catch(error)
             {
@@ -122,7 +139,7 @@ for(let k = 0; k<=action.length;k++)
             {
                 if(ORSheet.obName[m]===locator[k])
                 {
-                    if(locator[k] === "ProtectSavingsIncome" || locator[k] === "GreenLight")
+                    /*if(locator[k] === "ProtectSavingsIncome" || locator[k] === "GreenLight")
                     {
                         const newTab = await actLib.onClickTabClose(action[k], ORSheet.obName[m],ORSheet.obRef[m]);
                         page = newTab.page1;
@@ -130,8 +147,8 @@ for(let k = 0; k<=action.length;k++)
                         let operation2 = await Docx.createP();
                         await operation2.addText(`Screenshot_${action[k]}_${locator[k]}`);
                         await operation2.addImage(newTab.screenshotFilePath, {cx: 600, cy: 250})
-                    }
-                    else if(locator[k] === "UploadDoc")
+                    }*/
+                    if(locator[k] === "UploadDoc")
                     {
                         const newTab = await actLib.onClickUploadDoc(action[k], ORSheet.obName[m],ORSheet.obRef[m]);
                         let operation2 = await Docx.createP();

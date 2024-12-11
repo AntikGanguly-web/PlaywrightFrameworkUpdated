@@ -107,7 +107,49 @@ async onClick(action, obName, loc)
     await this.page.screenshot({ path: screenshotFilePath });
     return screenshotFilePath;
 }
-async onClickTabClose(action, obName, loc)
+async tabChange(action,locator)
+{
+    await page.locator(".x-icon-menu").click();
+    await page.getByText('EXISTING BUSINESS SERVICES DASHBOARD').click();
+    const [newPage] = await Promise.all(
+                                        [context.waitForEvent('page'),
+                                        page.getByText('OM Protect/Savings & Income').click()]
+                                        );
+    await this.page.close()
+    this.page = newPage
+    const page1= this.page
+    const OR = new ORHandler(context, page)
+    let ORSheet = await OR.getORSheet(ServiceDashboard)
+    const screenshot = captureScreenShot (action,locator)    
+    return {ORSheet,page1,screenshot}
+}
+async tabChangeGL(action,locator)
+{
+    await page.locator(".x-icon-menu").click();
+    await page.getByText('EXISTING BUSINESS SERVICES DASHBOARD').click();
+    const [newPage] = await Promise.all(
+                                        [context.waitForEvent('page'),
+                                        page.getByText('Greenlight').click()]
+                                        );
+    await this.page.close()
+    this.page = newPage
+    const page1= this.page
+    const OR = new ORHandler(context, page)
+    let ORSheet = await OR.getORSheet(ServiceDashboard)
+    const screenshot = captureScreenShot (action,locator)    
+    return {ORSheet,page1,screenshot}
+}
+
+async captureScreenShot(action,loc)
+{
+    const currentDate = new Date();
+    const timestamp = currentDate.getTime();
+    const ssfilepath = 'D:/Users/XY50035/OneDrive - Old Mutual/Desktop/PlaywrightFramework/test-results';
+    const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${loc}_${timestamp}.png`;
+    await this.page.screenshot({ path: screenshotFilePath })
+    return screenshotFilePath
+}
+/*async onClickTabClose(action, obName, loc)
 {
     const currentDate = new Date();
     const timestamp = currentDate.getTime();
@@ -127,7 +169,7 @@ async onClickTabClose(action, obName, loc)
     const page1 = this.page;
     await this.page.screenshot({ path: screenshotFilePath });
     return {page1,screenshotFilePath};
-}
+}*/
 async onClickUploadDoc(action, obName, loc)
 {
     const currentDate = new Date();
