@@ -107,44 +107,42 @@ async onClick(action, obName, loc)
     await this.page.screenshot({ path: screenshotFilePath });
     return screenshotFilePath;
 }
-async tabChange(action,locator)
+async tabChange(OR,action)
 {
-    await page.locator(".x-icon-menu").click();
-    await page.getByText('EXISTING BUSINESS SERVICES DASHBOARD').click();
+    await this.page.locator(".x-icon-menu").click();
+    await this.page.getByText('EXISTING BUSINESS SERVICES DASHBOARD').click();
     const [newPage] = await Promise.all(
-                                        [context.waitForEvent('page'),
-                                        page.getByText('OM Protect/Savings & Income').click()]
+                                        [this.context.waitForEvent('page'),
+                                        await this.page.getByText('OM Protect/Savings & Income').click()]
                                         );
     await this.page.close()
     this.page = newPage
-    const page1= this.page
-    const OR = new ORHandler(context, page)
-    let ORSheet = await OR.getORSheet(ServiceDashboard)
-    const screenshot = captureScreenShot (action,locator)    
-    return {ORSheet,page1,screenshot}
+    const page1 = this.page
+    await OR.newTab(page1);
+    let ORSheet = await OR.getORSheet(action,"ServiceDashboard")
+    return {ORSheet,page1}
 }
-async tabChangeGL(action,locator)
+async tabChangeGL(OR,action)
 {
     await page.locator(".x-icon-menu").click();
     await page.getByText('EXISTING BUSINESS SERVICES DASHBOARD').click();
     const [newPage] = await Promise.all(
-                                        [context.waitForEvent('page'),
-                                        page.getByText('Greenlight').click()]
+                                        [this.context.waitForEvent('page'),
+                                        await page.getByText('Greenlight').click()]
                                         );
     await this.page.close()
     this.page = newPage
-    const page1= this.page
-    const OR = new ORHandler(context, page)
-    let ORSheet = await OR.getORSheet(ServiceDashboard)
-    const screenshot = captureScreenShot (action,locator)    
-    return {ORSheet,page1,screenshot}
+    const page1 = this.page
+    await OR.newTab(page1);
+    let ORSheet = await OR.getORSheet(action,"ServiceDashboard")
+    return {ORSheet,page1}
 }
 
 async captureScreenShot(action,loc)
 {
     const currentDate = new Date();
     const timestamp = currentDate.getTime();
-    const ssfilepath = 'D:/Users/XY50035/OneDrive - Old Mutual/Desktop/PlaywrightFramework/test-results';
+    const ssfilepath = 'D:/Users/XY50035/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
     const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${loc}_${timestamp}.png`;
     await this.page.screenshot({ path: screenshotFilePath })
     return screenshotFilePath
@@ -212,7 +210,7 @@ async captureSr(action, obName, loc)
     const timestamp = currentDate.getTime();
     await expect(this.page.locator(loc)).toBeVisible();
     await this.page.waitForTimeout(1000);
-    const ssfilepath = 'D:/Users/XY50035/Downloads/PlaywrightFramework (2)/PlaywrightFramework/test-results';
+    const ssfilepath = 'D:/Users/XY50035/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
     const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${obName}_${timestamp}.png`;
     await this.highlightElement(loc);
     let SRNum = await this.page.locator(loc).innerText();

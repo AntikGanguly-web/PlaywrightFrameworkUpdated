@@ -3,7 +3,7 @@ const { test } = require('@playwright/test');
 const { alert } = require('vscode-websocket-alerts');
 const {ORHandler} = require('../HelperClasses/ORHandler')
 const {ActionLibrary} = require('../HelperClasses/ActionLibrary');
-const Fs = require('fs');
+const fs = require('fs');
 const Officegen = require('officegen');
 const Docx = Officegen('docx');
 const scenarioSets = JSON.parse(JSON.stringify(require('../utils/ScenarioNumbers.json')));
@@ -51,25 +51,29 @@ for(let k = 0; k<=action.length;k++)
     switch (action[k]) {
         case "Navigate":
             try{
+                let screenshotFilePath4;
                 if(locator[k]==="ServiceDashBoardOpen")
                 {
-                    const newTab = await actLib.tabChange(action[k],locator[k])
-                    page = newTab.page1
-                    ORSheet = newTab.ORSheet
+                    const newTabOpen = await actLib.tabChange(OR,action[k],locator[k])
+                    page = newTabOpen.page1
+                    ORSheet = newTabOpen.ORSheet
+                    screenshotFilePath4 = ORSheet.screenshot;
                 }
                 else if(locator[k]==="ServiceDashBoardClose")
                 {
-                    const newTab = await actLib.tabChangeGL(action[k],locator[k])
-                    page = newTab.page1
-                    ORSheet = newTab.ORSheet
+                    const newTab = await actLib.tabChangeGL(OR,action[k],locator[k]);
+                    page = newTab.page1;
+                    ORSheet = newTab.ORSheet;
+                    screenshotFilePath4 = ORSheet.screenshot;
                 }
                 else
                 {
-                    ORSheet = await OR.getORSheet(locator[k]);
+                    ORSheet = await OR.getORSheet(action[k], locator[k]);
+                    screenshotFilePath4 = ORSheet.screenshot;
                 } 
-                let operation4 = await docx.createP();
-                await operation4.addText(`Screenshot_${action[k]}_${locator[k]}`);
-                await operation4.addImage(newTab.screenshotFilePath, {cx: 600, cy: 250})
+                let operation5 = await Docx.createP();
+                await operation5.addText(`Screenshot_${action[k]}_${locator[k]}`);
+                await operation5.addImage(screenshotFilePath4, {cx: 600, cy: 250})
             }
             catch(error)
             {
@@ -199,10 +203,10 @@ for(let k = 0; k<=action.length;k++)
                     {
                         if(ORSheet.obName[n] === locator[k])
                         {  
-                            screenshotFilePath2 = actLib.captureSr(action[k],ORSheet.obName[n],ORSheet.obRef[n]);
+                            screenshotFilePath2 = await actLib.captureSr(action[k],ORSheet.obName[n],ORSheet.obRef[n]);
                         }
                     }
-                    let operation4 = await docx.createP();
+                    let operation4 = await Docx.createP();
                     await operation4.addText(`Screenshot_${action[k]}_${locator[k]}`);
                     await operation4.addImage(screenshotFilePath2, {cx: 600, cy: 250})
                     }
@@ -216,7 +220,7 @@ for(let k = 0; k<=action.length;k++)
             break;
     }
 }
-        const out = Fs.createWriteStream("D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results/Report.docx");
+        const out = fs.createWriteStream("D:/Users/XY50035/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results/Report.docx");
         Docx.generate(out);
         await page.close();
 })

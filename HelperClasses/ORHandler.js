@@ -8,7 +8,7 @@ class ORHandler
     this.context=context;
     this.page=page;
   }
-async getORSheet(worksheet)
+async getORSheet(action, worksheet)
 {
     let obName = [];
     let obRef = [];
@@ -42,8 +42,18 @@ async getORSheet(worksheet)
       await this.page.locator(obRef[k]).evaluate((el)=>{
       el.style.border = '3px solid blue';
       });
+    const screenshot = await this.captureScreenShot(action,worksheet)    
     await this.page.waitForTimeout(2000);
-    return {obName,obRef};
+    return {screenshot,obName,obRef};
+}
+async captureScreenShot(action,loc)
+{
+    const currentDate = new Date();
+    const timestamp = currentDate.getTime();
+    const ssfilepath = 'D:/Users/XY50035/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
+    const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${loc}_${timestamp}.png`;
+    await this.page.screenshot({ path: screenshotFilePath })
+    return screenshotFilePath
 }
 async newTab(newPage)
 {
