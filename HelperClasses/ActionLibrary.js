@@ -1,6 +1,7 @@
 const { expect } = require('@playwright/test');
 const ExcelJS = require('exceljs');
 
+let screenshot
 class ActionLibrary
 {
 constructor(context, page)
@@ -8,12 +9,14 @@ constructor(context, page)
     this.context = context;
     this.page = page;
 }
-async openURL(website)
+async openURL(action,website)
 {
     if(website === "OMSA")
     {
     await this.page.goto("https://secure.advisorweb.snist.dev.oldmutual.co.za/dashboard/sales-dashboard");
     }
+    screenshot = captureScreenShot (action,website)
+    return screenshot
 }
 async enterText(action,obName,loc,value)
 {
@@ -203,6 +206,33 @@ async highlightElement(loc)
         el.style.border = '3px solid blue';
       });
     await this.page.waitForTimeout(1500);
+}
+async carPageAction(action,loc)
+{
+    ORSheet = await OR.getORSheet(locator[k])
+    let screenshot = []
+    await this.highlightElement("text='FINANCIAL PLAN'")
+    screenshot [0]= await this.captureScreenShot("Financial","Tab")
+    await this.highlightElement("text='ADVICE DETAILS'")
+    screenshot [1]= await this.captureScreenShot("Advice Details","Tab")
+    await this.highlightElement("text='TRANSACTION(S)'")
+    screenshot [2]= await this.captureScreenShot("Transaction","Tab")
+    await this.page.locator("//h3[contains(text(),'ADVICE DETAILS')]//following::div[8]").click()
+    screenshot [3]= await this.captureScreenShot("Question1","Yes")
+    await this.page.locator("//h3[contains(text(),'ADVICE DETAILS')]//following::div[16]").click()
+    screenshot [4]= await this.captureScreenShot("Question2","Yes")
+    await this.highlightElement("text='IMPLICATION & RECOMMENDATION '")
+    screenshot [5]= await this.captureScreenShot("Implication","Tab")
+    await this.page.locator("[placeholder*='Type the <Implication of Transaction(s)>']").fill("Implication")
+    screenshot [6]= await this.captureScreenShot("Implication","Text")
+    await this.page.locator("[placeholder*='Type <Reason for Recommendation>']").fill("Reason For Recommendation")
+    screenshot [7]= await this.captureScreenShot("Recommendation","Text")
+    await this.page.locator(".next-btn").click()
+    screenshot [8]= await this.captureScreenShot("Save","Button")
+    await this.page.locator(".next-btn").click()
+    screenshot [9]= await this.captureScreenShot("Next","Button")
+        
+    return {ORSheet,screenshot}
 }
 async captureSr(action, obName, loc)
 {  

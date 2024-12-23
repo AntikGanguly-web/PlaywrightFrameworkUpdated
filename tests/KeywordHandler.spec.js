@@ -21,6 +21,7 @@ test(`Scenario Executing - ${scenarioSet.ScenarioName}`,async ({browser})=>
     const workbook = new ExcelJS.Workbook();
     await workbook.xlsx.readFile("D:/Users/XY50035/OneDrive - Old Mutual/Desktop/KeywordOMSA.xlsx");
     const worksheet = workbook.getWorksheet('Keyword');
+    let screenshot , operation
     let i = 0;
     let j = 0;
     let action = [];
@@ -66,6 +67,17 @@ for(let k = 0; k<=action.length;k++)
                     ORSheet = newTab.ORSheet;
                     screenshotFilePath4 = ORSheet.screenshot;
                 }
+                else if(locator[k]==="CustomerAdviceRecord")
+                {
+                    const carPage = await actLib.carPageAction(action[k],locator[k])
+                    for(let i=0;i<carPage.screenshot.length();i++)
+                    {
+                        let operation = await Docx.createP();
+                        await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
+                        await operation.addImage(carPage.screenshot[i], {cx: 600, cy: 250})
+                    }
+                    
+                }
                 else
                 {
                     ORSheet = await OR.getORSheet(action[k], locator[k]);
@@ -79,10 +91,29 @@ for(let k = 0; k<=action.length;k++)
             {
                 alert(`Exception - ${action[k]}_${locator[k]}`);
                 await page.waitForTimeout(10000);
+                screenshot = await actLib.captureScreenShot(action[k],locator[k])
+                let operation = await docx.createP();
+                await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
+                await operation.addImage(screenshot, {cx: 600, cy: 250})
             }
             break;
-        case "GOTO":
-            await actLib.openURL(locator[k]);
+            case "GOTO":
+                try
+                {
+                    screenshot = await actLib.openURL(action[k],locator[k]);
+                    let operation = await docx.createP();
+                    await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
+                    await operation.addImage(newTab.screenshotFilePath, {cx: 600, cy: 250})
+                }
+                catch(error)
+                {
+                    alert(`Exception - ${action[k]}_${locator[k]}`);
+                    await page.waitForTimeout(10000);
+                    screenshot = await actLib.captureScreenShot(action[k],locator[k])
+                    let operation = await docx.createP();
+                    await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
+                    await operation.addImage(screenshot, {cx: 600, cy: 250})
+                }
             break;
         case "Enter":
             let data;
@@ -112,6 +143,11 @@ for(let k = 0; k<=action.length;k++)
             {
                 alert(`Exception - ${action[k]}_${locator[k]}`);
                 await page.waitForTimeout(10000);
+                screenshot = await actLib.captureScreenShot(action[k],locator[k])
+                let operation = await docx.createP();
+                await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
+                await operation.addImage(screenshot, {cx: 600, cy: 250})
+
             }
             break;
             case "Select":
@@ -135,6 +171,10 @@ for(let k = 0; k<=action.length;k++)
                 {
                     alert(`Exception - ${action[k]}_${locator[k]}`);
                     await page.waitForTimeout(10000);
+                    screenshot = await actLib.captureScreenShot(action[k],locator[k])
+                    let operation = await docx.createP();
+                    await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
+                    await operation.addImage(screenshot, {cx: 600, cy: 250})
                 }
                 break;
         case "Click":
@@ -174,6 +214,10 @@ for(let k = 0; k<=action.length;k++)
             {
                 alert(`Exception - ${action[k]}_${locator[k]}`);
                 await page.waitForTimeout(10000);
+                screenshot = await actLib.captureScreenShot(action[k],locator[k])
+                let operation = await docx.createP();
+                await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
+                await operation.addImage(screenshot, {cx: 600, cy: 250})
             }
             break;
         case "Check":
@@ -194,6 +238,10 @@ for(let k = 0; k<=action.length;k++)
             {
                 alert(`Exception - ${action[k]}_${locator[k]}`);
                 await page.waitForTimeout(10000);
+                screenshot = await actLib.captureScreenShot(action[k],locator[k])
+                let operation = await docx.createP();
+                await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
+                await operation.addImage(screenshot, {cx: 600, cy: 250})
             }
             break;
             case "Capture":
@@ -214,9 +262,13 @@ for(let k = 0; k<=action.length;k++)
                     {
                         alert(`Exception - ${action[k]}_${locator[k]}`);
                         await page.waitForTimeout(10000);
+                        screenshot = await actLib.captureScreenShot(action[k],locator[k])
+                        let operation = await docx.createP();
+                        await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
+                        await operation.addImage(screenshot, {cx: 600, cy: 250})
                     }
                 break;
-        default:
+            default:
             break;
     }
 }
