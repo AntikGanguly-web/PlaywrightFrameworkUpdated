@@ -55,14 +55,14 @@ for(let k = 0; k<=action.length;k++)
                 let screenshotFilePath4;
                 if(locator[k]==="ServiceDashBoardOpen")
                 {
-                    const newTabOpen = await actLib.tabChange(OR,action[k],locator[k])
+                    const newTabOpen = await actLib.tabChange(OR,action[k])
                     page = newTabOpen.page1
                     ORSheet = newTabOpen.ORSheet
                     screenshotFilePath4 = ORSheet.screenshot;
                 }
                 else if(locator[k]==="ServiceDashBoardClose")
                 {
-                    const newTab = await actLib.tabChangeGL(OR,action[k],locator[k]);
+                    const newTab = await actLib.tabChangeGL(OR,action[k]);
                     page = newTab.page1;
                     ORSheet = newTab.ORSheet;
                     screenshotFilePath4 = ORSheet.screenshot;
@@ -92,7 +92,7 @@ for(let k = 0; k<=action.length;k++)
                 alert(`Exception - ${action[k]}_${locator[k]}`);
                 await page.waitForTimeout(10000);
                 screenshot = await actLib.captureScreenShot(action[k],locator[k])
-                let operation = await docx.createP();
+                let operation = await Docx.createP();
                 await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
                 await operation.addImage(screenshot, {cx: 600, cy: 250})
             }
@@ -101,7 +101,7 @@ for(let k = 0; k<=action.length;k++)
                 try
                 {
                     screenshot = await actLib.openURL(action[k],locator[k]);
-                    let operation = await docx.createP();
+                    let operation = await Docx.createP();
                     await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
                     await operation.addImage(newTab.screenshotFilePath, {cx: 600, cy: 250})
                 }
@@ -110,7 +110,7 @@ for(let k = 0; k<=action.length;k++)
                     alert(`Exception - ${action[k]}_${locator[k]}`);
                     await page.waitForTimeout(10000);
                     screenshot = await actLib.captureScreenShot(action[k],locator[k])
-                    let operation = await docx.createP();
+                    let operation = await Docx.createP();
                     await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
                     await operation.addImage(screenshot, {cx: 600, cy: 250})
                 }
@@ -144,7 +144,7 @@ for(let k = 0; k<=action.length;k++)
                 alert(`Exception - ${action[k]}_${locator[k]}`);
                 await page.waitForTimeout(10000);
                 screenshot = await actLib.captureScreenShot(action[k],locator[k])
-                let operation = await docx.createP();
+                let operation = await Docx.createP();
                 await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
                 await operation.addImage(screenshot, {cx: 600, cy: 250})
 
@@ -172,7 +172,7 @@ for(let k = 0; k<=action.length;k++)
                     alert(`Exception - ${action[k]}_${locator[k]}`);
                     await page.waitForTimeout(10000);
                     screenshot = await actLib.captureScreenShot(action[k],locator[k])
-                    let operation = await docx.createP();
+                    let operation = await Docx.createP();
                     await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
                     await operation.addImage(screenshot, {cx: 600, cy: 250})
                 }
@@ -215,7 +215,7 @@ for(let k = 0; k<=action.length;k++)
                 alert(`Exception - ${action[k]}_${locator[k]}`);
                 await page.waitForTimeout(10000);
                 screenshot = await actLib.captureScreenShot(action[k],locator[k])
-                let operation = await docx.createP();
+                let operation = await Docx.createP();
                 await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
                 await operation.addImage(screenshot, {cx: 600, cy: 250})
             }
@@ -239,7 +239,7 @@ for(let k = 0; k<=action.length;k++)
                 alert(`Exception - ${action[k]}_${locator[k]}`);
                 await page.waitForTimeout(10000);
                 screenshot = await actLib.captureScreenShot(action[k],locator[k])
-                let operation = await docx.createP();
+                let operation = await Docx.createP();
                 await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
                 await operation.addImage(screenshot, {cx: 600, cy: 250})
             }
@@ -263,7 +263,7 @@ for(let k = 0; k<=action.length;k++)
                         alert(`Exception - ${action[k]}_${locator[k]}`);
                         await page.waitForTimeout(10000);
                         screenshot = await actLib.captureScreenShot(action[k],locator[k])
-                        let operation = await docx.createP();
+                        let operation = await Docx.createP();
                         await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
                         await operation.addImage(screenshot, {cx: 600, cy: 250})
                     }
