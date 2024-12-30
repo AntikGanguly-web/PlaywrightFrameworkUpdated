@@ -13,7 +13,7 @@ async getORSheet(action, worksheet)
     let obName = [];
     let obRef = [];
     const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.readFile("D:/Users/XY50035/OneDrive - Old Mutual/Desktop/ObjectRepository.xlsx");
+    await workbook.xlsx.readFile("D:/Users/XY59004/OneDrive - Old Mutual/Desktop/ObjectRepo_CS.xlsx");
     const worksheet1 = workbook.getWorksheet(worksheet);
     let i = 0;
     let j = 0;
@@ -50,7 +50,7 @@ async captureScreenShot(action,loc)
 {
     const currentDate = new Date();
     const timestamp = currentDate.getTime();
-    const ssfilepath = 'D:/Users/XY50035/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
+    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
     const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${loc}_${timestamp}.png`;
     await this.page.screenshot({ path: screenshotFilePath })
     return screenshotFilePath

@@ -1,7 +1,8 @@
 const { expect } = require('@playwright/test');
 const ExcelJS = require('exceljs');
 
-let screenshot
+let screenshot ,rNum, ServiceRequestNum, CaptureSR
+
 class ActionLibrary
 {
 constructor(context, page)
@@ -24,7 +25,7 @@ async enterText(action,obName,loc,value)
     const timestamp = currentDate.getTime();
     await expect(this.page.locator(loc)).toBeVisible();
     await expect(this.page.locator(loc)).toBeEditable();
-    const ssfilepath = 'D:/Users/XY50035/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
+    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
     const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${obName}_${timestamp}.png`;
     await this.highlightElement(loc);
     let cNum;
@@ -38,7 +39,7 @@ async enterText(action,obName,loc,value)
     else
     {
     const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.readFile("D:/Users/XY50035/OneDrive - Old Mutual/Desktop/DataSheet.xlsx");
+    await workbook.xlsx.readFile("D:/Users/XY59004/OneDrive - Old Mutual/Desktop/DataSheet.xlsx");
     const worksheet = workbook.getWorksheet('WebEdit');
     worksheet.eachRow((row, rowNumber) =>
     {
@@ -67,14 +68,14 @@ async selectText(action, obName,loc,value)
     const timestamp = currentDate.getTime();
     await expect(this.page.locator(loc)).toBeVisible();
     await expect(this.page.locator(loc)).toBeEditable();
-    const ssfilepath = 'D:/Users/XY50035/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
+    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
     const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${obName}_${timestamp}.png`;
     await this.highlightElement(loc);
     let cNum;
     let rNum; 
     let dataVal;
     const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.readFile("D:/Users/XY50035/OneDrive - Old Mutual/Desktop/DataSheet.xlsx");
+    await workbook.xlsx.readFile("D:/Users/XY59004/OneDrive - Old Mutual/Desktop/DataSheet.xlsx");
     const worksheet = workbook.getWorksheet('WebList');
     worksheet.eachRow((row, rowNumber) =>
     {
@@ -102,7 +103,7 @@ async onClick(action, obName, loc)
     const timestamp = currentDate.getTime();
     await expect(this.page.locator(loc)).toBeVisible();
     await expect(this.page.locator(loc)).toBeEnabled();
-    const ssfilepath = 'D:/Users/XY50035/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
+    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
     const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${obName}_${timestamp}.png`;
     await this.highlightElement(loc);
     await this.page.locator(loc).click();
@@ -145,7 +146,7 @@ async captureScreenShot(action,loc)
 {
     const currentDate = new Date();
     const timestamp = currentDate.getTime();
-    const ssfilepath = 'D:/Users/XY50035/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
+    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
     const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${loc}_${timestamp}.png`;
     await this.page.screenshot({ path: screenshotFilePath })
     return screenshotFilePath
@@ -177,7 +178,7 @@ async onClickUploadDoc(action, obName, loc)
     const timestamp = currentDate.getTime();
     await expect(this.page.locator(loc)).toBeVisible();
     await expect(this.page.locator(loc)).toBeEnabled();
-    const ssfilepath = 'D:/Users/XY50035/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
+    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
     const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${obName}_${timestamp}.png`;
     await this.highlightElement(loc);
     await this.page.locator(loc).click();
@@ -192,7 +193,7 @@ async checkElement(action, obName, loc)
     const currentDate = new Date();
     const timestamp = currentDate.getTime();
     await expect(this.page.locator(loc)).toBeVisible();
-    const ssfilepath = 'D:/Users/XY50035/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
+    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
     const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${obName}_${timestamp}.png`;
     await this.highlightElement(loc);
     await this.page.waitForTimeout(1000);
@@ -240,7 +241,7 @@ async captureSr(action, obName, loc)
     const timestamp = currentDate.getTime();
     await expect(this.page.locator(loc)).toBeVisible();
     await this.page.waitForTimeout(1000);
-    const ssfilepath = 'D:/Users/XY50035/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
+    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
     const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${obName}_${timestamp}.png`;
     await this.highlightElement(loc);
     let SRNum = await this.page.locator(loc).innerText();
@@ -250,5 +251,38 @@ async captureSr(action, obName, loc)
     await this.page.screenshot({ path: screenshotFilePath });
     return screenshotFilePath;
 }
+async captureSr(action, obName, loc)
+{  
+    const currentDate = new Date();
+    const timestamp = currentDate.getTime();
+    await expect(this.page.locator(loc)).toBeVisible();
+    await this.page.waitForTimeout(1000);
+    const ssfilepath = 'D:/Users/X498203/Downloads/PlaywrightFramework (2)/PlaywrightFramework/test-results';
+    const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${obName}_${timestamp}.png`;
+    await this.highlightElement(loc);
+    let SRNum = await this.page.locator(loc).innerText();
+    SRNum = SRNum.split(":");
+    SRNum = SRNum[1];
+    SRNum = SRNum.trim();
+    console.log(SRNum);
+    await this.page.screenshot({ path: screenshotFilePath });
+    return {screenshotFilePath, SRNum};
+}
+ 
+async enterData(action, obName, loc, SRNum)
+{  
+    const currentDate = new Date();
+    const timestamp = currentDate.getTime();
+    await expect(this.page.locator(loc)).toBeVisible();
+    await this.page.waitForTimeout(1000);
+    const ssfilepath = 'D:/Users/X498203/Downloads/PlaywrightFramework (2)/PlaywrightFramework/test-results';
+    const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${obName}_${timestamp}.png`;
+    await this.highlightElement(loc);
+    console.log(SRNum);
+    await this.page.locator(loc).fill(SRNum);
+    await this.page.screenshot({ path: screenshotFilePath });
+    return {screenshotFilePath, SRNum};
+}
+ 
 }
 module.exports = {ActionLibrary};

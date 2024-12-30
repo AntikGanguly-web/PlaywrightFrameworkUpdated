@@ -1,10 +1,10 @@
 [
 {
-    "ScenarioName": "SER_REG_CM_0001",
+    "ScenarioName": "SER_REG_CS_0124",
     "RunFlag": "Y"
 },
 {
-    "ScenarioName": "SER_REG_CM_0002",
+    "ScenarioName": "SER_REG_CS_0027",
     "RunFlag": "N"
 }
 ]

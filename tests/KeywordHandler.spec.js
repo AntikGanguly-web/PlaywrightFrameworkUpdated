@@ -1,3 +1,4 @@
+
 const ExcelJS = require('exceljs');
 const { test } = require('@playwright/test');
 const { alert } = require('vscode-websocket-alerts');
@@ -19,7 +20,7 @@ test(`Scenario Executing - ${scenarioSet.ScenarioName}`,async ({browser})=>
     const OR = new ORHandler(context, page);
     const actLib = new ActionLibrary(context, page);
     const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.readFile("D:/Users/XY50035/OneDrive - Old Mutual/Desktop/KeywordOMSA.xlsx");
+    await workbook.xlsx.readFile("D:/Users/XY59004/OneDrive - Old Mutual/Desktop/Keywords.xlsx");
     const worksheet = workbook.getWorksheet('Keyword');
     let screenshot , operation
     let i = 0;
@@ -268,11 +269,49 @@ for(let k = 0; k<=action.length;k++)
                         await operation.addImage(screenshot, {cx: 600, cy: 250})
                     }
                 break;
+                case "SRNumber":
+                let Reference;
+                try{
+                    for(let n=0;n<ORSheet.obName.length;n++)
+                    {
+                        if(ORSheet.obName[n] === locator[k])
+                        {  
+                            Reference = await actLib.enterData(action[k],ORSheet.obName[n],ORSheet.obRef[n],ServiceRequestNum);                            
+                        }
+                    }
+                    let operation5 = await docx.createP();
+                    await operation5.addText(`Screenshot_${action[k]}_${locator[k]}`);
+                    await operation5.addImage(Reference.screenshotFilePath, {cx: 600, cy: 250});        
+                }
+                catch{
+                    alert(`Exception - ${action[k]}_${locator[k]}`);
+                    await page.waitForTimeout(10000);
+                }
+                break;
+                case "Capture":
+                    try{
+                    for(let n=0;n<ORSheet.obName.length;n++)
+                    {
+                        if(ORSheet.obName[n] === locator[k])
+                        {  
+                            CaptureSR = await actLib.captureSr(action[k],ORSheet.obName[n],ORSheet.obRef[n]);
+                            ServiceRequestNum= CaptureSR.SRNum;
+                            console.log(CaptureSR.SRNum);
+                        }
+                    }
+                    let operation4 = await docx.createP();
+                    await operation4.addText(`Screenshot_${action[k]}_${locator[k]}`);
+                    await operation4.addImage(CaptureSR.screenshotFilePath, {cx: 600, cy: 250});}
+                    catch{
+                        alert(`Exception - ${action[k]}_${locator[k]}`);
+                        await page.waitForTimeout(10000);
+                    }
+                    break;
             default:
             break;
     }
 }
-        const out = fs.createWriteStream("D:/Users/XY50035/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results/Report.docx");
+        const out = fs.createWriteStream(`D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results/${scenarioSet.ScenarioName}.docx`);
         Docx.generate(out);
         await page.close();
 })
