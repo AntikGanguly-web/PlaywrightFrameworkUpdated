@@ -18,7 +18,7 @@ module.exports = defineConfig({
       viewport: null,
       launchOptions:{
         args:["--start-maximized"],
-        slowMo: 200
+        slowMo: 50
       },
       screenshot: 'on',
       trace: 'on'
