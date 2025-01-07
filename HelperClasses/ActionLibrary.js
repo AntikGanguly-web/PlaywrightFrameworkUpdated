@@ -25,6 +25,7 @@ async enterText(action,obName,loc,value)
     const timestamp = currentDate.getTime();
     await expect(this.page.locator(loc)).toBeVisible();
     await expect(this.page.locator(loc)).toBeEditable();
+    this.page.locator(loc).clear()
     const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
     const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${obName}_${timestamp}.png`;
     await this.highlightElement(loc);
@@ -128,11 +129,11 @@ async tabChange(OR,action)
 }
 async tabChangeGL(OR,action)
 {
-    await page.locator(".x-icon-menu").click();
-    await page.getByText('EXISTING BUSINESS SERVICES DASHBOARD').click();
+    await this.page.locator(".x-icon-menu").click();
+    await this.page.getByText('EXISTING BUSINESS SERVICES DASHBOARD').click();
     const [newPage] = await Promise.all(
                                         [this.context.waitForEvent('page'),
-                                        await page.getByText('Greenlight').click()]
+                                        await this.page.getByText('Greenlight').click()]
                                         );
     await this.page.close()
     this.page = newPage
@@ -257,7 +258,7 @@ async captureSr(action, obName, loc)
     const timestamp = currentDate.getTime();
     await expect(this.page.locator(loc)).toBeVisible();
     await this.page.waitForTimeout(1000);
-    const ssfilepath = 'D:/Users/X498203/Downloads/PlaywrightFramework (2)/PlaywrightFramework/test-results';
+    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
     const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${obName}_${timestamp}.png`;
     await this.highlightElement(loc);
     let SRNum = await this.page.locator(loc).innerText();
@@ -275,13 +276,27 @@ async enterData(action, obName, loc, SRNum)
     const timestamp = currentDate.getTime();
     await expect(this.page.locator(loc)).toBeVisible();
     await this.page.waitForTimeout(1000);
-    const ssfilepath = 'D:/Users/X498203/Downloads/PlaywrightFramework (2)/PlaywrightFramework/test-results';
+    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
     const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${obName}_${timestamp}.png`;
     await this.highlightElement(loc);
     console.log(SRNum);
     await this.page.locator(loc).fill(SRNum);
     await this.page.screenshot({ path: screenshotFilePath });
     return {screenshotFilePath, SRNum};
+}
+async hoverElement(action, obName, loc)
+{
+    const currentDate = new Date();
+    const timestamp = currentDate.getTime();
+    await expect(this.page.locator(loc)).toBeVisible();
+    await expect(this.page.locator(loc)).toBeEnabled();
+    const ssfilepath = 'D:/Users/XY59004/OneDrive - Old Mutual/Desktop/PlaywrightFrameworkUpdated/test-results';
+    const screenshotFilePath = `${ssfilepath}/screenshot_${action}_${obName}_${timestamp}.png`;
+    await this.highlightElement(loc);
+    await this.page.locator(loc).hover();
+    await this.page.waitForTimeout(1000);
+    await this.page.screenshot({ path: screenshotFilePath });
+    return screenshotFilePath;
 }
  
 }

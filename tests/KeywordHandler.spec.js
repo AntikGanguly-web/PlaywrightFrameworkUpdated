@@ -193,7 +193,7 @@ for(let k = 0; k<=action.length;k++)
                         await operation2.addText(`Screenshot_${action[k]}_${locator[k]}`);
                         await operation2.addImage(newTab.screenshotFilePath, {cx: 600, cy: 250})
                     }*/
-                    if(locator[k] === "UploadDoc")
+                    if(locator[k] === "UploadDoc"||locator[k] === "UploadDocAnother")
                     {
                         const newTab = await actLib.onClickUploadDoc(action[k], ORSheet.obName[m],ORSheet.obRef[m]);
                         let operation2 = await Docx.createP();
@@ -296,7 +296,7 @@ for(let k = 0; k<=action.length;k++)
                         {  
                             CaptureSR = await actLib.captureSr(action[k],ORSheet.obName[n],ORSheet.obRef[n]);
                             ServiceRequestNum= CaptureSR.SRNum;
-                            console.log(CaptureSR.SRNum);
+                            //console.log(CaptureSR.SRNum);
                         }
                     }
                     let operation4 = await docx.createP();
@@ -306,7 +306,27 @@ for(let k = 0; k<=action.length;k++)
                         alert(`Exception - ${action[k]}_${locator[k]}`);
                         await page.waitForTimeout(10000);
                     }
-                    break;
+                break;
+                case "Hover":
+                try{
+                let mouseHover;
+                for(let n=0;n<ORSheet.obName.length;n++)
+                {
+                    if(ORSheet.obName[n] === locator[k])
+                    {
+                        mouseHover = await actLib.hoverElement(action[k], ORSheet.obName[n], ORSheet.obRef[n]);
+                    }
+                }
+                let operation6 = await docx.createP();
+                await operation6.addText(`Screenshot_${action[k]}_${locator[k]}`);
+                await operation6.addImage(mouseHover, {cx: 600, cy: 250})
+                }
+                catch(error)
+                {
+                    alert(`Exception - ${action[k]}_${locator[k]}`);
+                    await page.waitForTimeout(10000);
+                }
+                break;
             default:
             break;
     }

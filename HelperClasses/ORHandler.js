@@ -38,10 +38,19 @@ async getORSheet(action, worksheet)
               }
           }  )
     })
+    try
+    {
       await expect(this.page.locator(obRef[k])).toBeVisible();
       await this.page.locator(obRef[k]).evaluate((el)=>{
       el.style.border = '3px solid blue';
       });
+    }
+    catch(error)
+    {
+      alert(`Exception - ${action}_${worksheet}`);
+      await page.waitForTimeout(10000);
+    }
+   
     const screenshot = await this.captureScreenShot(action,worksheet)    
     await this.page.waitForTimeout(2000);
     return {screenshot,obName,obRef};
