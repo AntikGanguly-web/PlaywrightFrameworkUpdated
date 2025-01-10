@@ -7,7 +7,7 @@ module.exports = defineConfig({
   workers: 1,
   fullyParallel: false,
   expect:{
-    timeout: 80000
+    timeout: 50000
   },
   reporter: [['html',{open: 'always'}]],
   projects: [
@@ -18,7 +18,7 @@ module.exports = defineConfig({
       viewport: null,
       launchOptions:{
         args:["--start-maximized"],
-        slowMo: 50
+        //slowMo: 50
       },
       screenshot: 'on',
       trace: 'on'
