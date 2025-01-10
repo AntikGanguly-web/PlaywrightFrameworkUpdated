@@ -150,7 +150,7 @@ for(let k = 0; k<=action.length;k++)
             break;
             case "Select":
                 let data1;
-               // try{
+                try{
                 data1 = locator[k].split("-");
                 for(let l = 0; l<=ORSheet.obName.length; l++)
                 {
@@ -163,7 +163,7 @@ for(let k = 0; k<=action.length;k++)
                 operation = await Docx.createP();
                 await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
                 await operation.addImage(screenshotFilePath, {cx: 600, cy: 250})
-               /*}
+                }
                 catch(error)
                 {
                     alert(`Exception - ${action[k]}_${locator[k]}`);
@@ -172,7 +172,7 @@ for(let k = 0; k<=action.length;k++)
                     operation = await Docx.createP();
                     await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
                     await operation.addImage(screenshot, {cx: 600, cy: 250})
-                }*/
+                }
                 break;
         case "Click":
             try{
