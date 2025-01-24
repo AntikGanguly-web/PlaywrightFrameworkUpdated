@@ -9,11 +9,13 @@ module.exports = defineConfig({
   expect:{
     timeout: 50000
   },
-  reporter: [['html',{open: 'always'}]],
+  //reporter: [['html',{open: 'always'}]],
+  reporter: [['junit',{outputFile:'results.xml'}]],
   projects: [
     {
       use: {
-      browserName: "chromium",
+      //browserName: "chromium",
+      channel:"msedge",
       headless: false,
       viewport: null,
       launchOptions:{
