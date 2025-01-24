@@ -66,12 +66,33 @@ for(let k = 0; k<=action.length;k++)
                     ORSheet = newTab.ORSheet;
                     screenshotFilePath = ORSheet.screenshot;
                 }
+                else if(locator[k]==="CollectionHistory")
+                {
+                    const newTab = await actLib.tabChangeCollectionHistory(OR,action[k]);
+                    page = newTab.page1;
+                    ORSheet = newTab.ORSheet;
+                    screenshotFilePath = ORSheet.screenshot;
+                }
+                if(locator[k]==="ConservationDashBoardOpen")
+                {
+                    const newTabOpen = await actLib.tabChangeConservation(OR,action[k])
+                    page = newTabOpen.page1
+                    ORSheet = newTabOpen.ORSheet
+                    screenshotFilePath = ORSheet.screenshot;
+                }
+                else if(locator[k]==="ConservationDashBoardClose")
+                {
+                    const newTab = await actLib.tabChangeConservationGL(OR,action[k]);
+                    page = newTab.page1;
+                    ORSheet = newTab.ORSheet;
+                    screenshotFilePath = ORSheet.screenshot;
+                }
                 else if(locator[k]==="CustomerAdviceRecord")
                 {
                     const carPage = await actLib.carPageAction(action[k],locator[k])
                     for(let i=0;i<carPage.screenshot.length();i++)
                     {
-                        let operation = await Docx.createP();
+                        operation = await Docx.createP();
                         await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
                         await operation.addImage(carPage.screenshot[i], {cx: 600, cy: 250})
                     }
@@ -163,7 +184,7 @@ for(let k = 0; k<=action.length;k++)
                 operation = await Docx.createP();
                 await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
                 await operation.addImage(screenshotFilePath, {cx: 600, cy: 250})
-                }
+               }
                 catch(error)
                 {
                     alert(`Exception - ${action[k]}_${locator[k]}`);
@@ -187,10 +208,17 @@ for(let k = 0; k<=action.length;k++)
                         await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
                         await operation.addImage(newWindow, {cx: 600, cy: 250})
                     }
+                    if(locator[k] === "IEAddFile")
+                    {
+                        const newWindow = await actLib.onClickIEAddFile(action[k], ORSheet.obName[m],ORSheet.obRef[m]);
+                        operation = await Docx.createP();
+                        await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
+                        await operation.addImage(newWindow, {cx: 600, cy: 250})
+                    }
                     else
                     {
                         const clickSS = await actLib.onClick(action[k], ORSheet.obName[m], ORSheet.obRef[m]);
-                        let operation = await Docx.createP();
+                        operation = await Docx.createP();
                         await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
                         await operation.addImage(clickSS, {cx: 600, cy: 250})
                     }
@@ -217,7 +245,7 @@ for(let k = 0; k<=action.length;k++)
                     screenshotFilePath = await actLib.checkElement(action[k], ORSheet.obName[n], ORSheet.obRef[n]);
                 }
             }
-            let operation = await Docx.createP();
+            operation = await Docx.createP();
             await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
             await operation.addImage(screenshotFilePath, {cx: 600, cy: 250})
             }
@@ -287,7 +315,7 @@ for(let k = 0; k<=action.length;k++)
                         mouseHover = await actLib.hoverElement(action[k], ORSheet.obName[n], ORSheet.obRef[n]);
                     }
                 }
-                let operation = await docx.createP();
+                operation = await docx.createP();
                 await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
                 await operation.addImage(mouseHover, {cx: 600, cy: 250})
                 }
@@ -311,3 +339,4 @@ for(let k = 0; k<=action.length;k++)
 })
 }
 }
+
