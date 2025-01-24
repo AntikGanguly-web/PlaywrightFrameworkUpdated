@@ -130,7 +130,50 @@ async tabChangeGL(OR,action)
     let ORSheet = await OR.getORSheet(action,"ServiceDashboard")
     return {ORSheet,page1}
 }
-
+async tabChangeCollectionHistory(OR,action)
+{
+    await this.page.locator(".x-icon-menu").click();
+    const [newPage] = await Promise.all(
+                                        [this.context.waitForEvent('page'),
+                                        await this.page.getByText('COLLECTION HISTORY').click()]
+                                        );
+    await this.page.close()
+    this.page = newPage
+    const page1 = this.page
+    await OR.newTab(page1);
+    let ORSheet = await OR.getORSheet(action,"CollectionHistory")
+    return {ORSheet,page1}
+}
+async tabChangeConservation(OR,action)
+{
+    await this.page.locator(".x-icon-menu").click();
+    await this.page.getByText('CONSERVATION').click();
+    const [newPage] = await Promise.all(
+                                        [this.context.waitForEvent('page'),
+                                        await this.page.getByText('OM Protect/Savings & Income').click()]
+                                        );
+    await this.page.close()
+    this.page = newPage
+    const page1 = this.page
+    await OR.newTab(page1);
+    let ORSheet = await OR.getORSheet(action,"ConservationDashboard")
+    return {ORSheet,page1}
+}
+async tabChangeConservationGL(OR,action)
+{
+    await this.page.locator(".x-icon-menu").click();
+    await this.page.getByText('CONSERVATION').click();
+    const [newPage] = await Promise.all(
+                                        [this.context.waitForEvent('page'),
+                                        await this.page.getByText('Greenlight').click()]
+                                        );
+    await this.page.close()
+    this.page = newPage
+    const page1 = this.page
+    await OR.newTab(page1);
+    let ORSheet = await OR.getORSheet(action,"ConservationDashboard")
+    return {ORSheet,page1}
+}
 async captureScreenShot(action,loc)
 {
     const currentDate = new Date();
@@ -148,6 +191,17 @@ async onClickUploadDoc(action, obName, loc)
     await this.page.locator(loc).click();
     await this.page.waitForTimeout(1000);
     await this.page.locator("[type='file']").setInputFiles("C:/Temp/sticky1.pdf");
+    await this.page.waitForTimeout(1000);
+    screenshot = this.captureScreenShot (action,obName)
+    return screenshot;
+}
+async onClickIEAddFile(action, obName, loc)
+{
+    await expect(this.page.locator(loc)).toBeVisible();
+    await expect(this.page.locator(loc)).toBeEnabled();
+    await this.highlightElement(loc);
+    await this.page.waitForTimeout(1000);
+    await this.page.locator(loc).setInputFiles("C:/Temp/sticky1.pdf");
     await this.page.waitForTimeout(1000);
     screenshot = this.captureScreenShot (action,obName)
     return screenshot;
