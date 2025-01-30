@@ -73,7 +73,7 @@ for(let k = 0; k<=action.length;k++)
                     ORSheet = newTab.ORSheet;
                     screenshotFilePath = ORSheet.screenshot;
                 }
-                if(locator[k]==="ConservationDashBoardOpen")
+                else if(locator[k]==="ConservationDashBoardOpen")
                 {
                     const newTabOpen = await actLib.tabChangeConservation(OR,action[k])
                     page = newTabOpen.page1
@@ -305,6 +305,29 @@ for(let k = 0; k<=action.length;k++)
                         await operation.addImage(screenshot, {cx: 600, cy: 250})
                     }
                 break;
+                case "CheckNot":
+                try{
+                    for(let n=0;n<ORSheet.obName.length;n++)
+                    {
+                        if(ORSheet.obName[n] === locator[k])
+                        {
+                            screenshotFilePath = await actLib.checkNotElement(action[k], ORSheet.obName[n], ORSheet.obRef[n]);
+                        }
+                    }
+                    operation = await Docx.createP();
+                    await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
+                    await operation.addImage(screenshotFilePath, {cx: 600, cy: 250})
+                }
+                catch(error)
+                {
+                    alert(`Exception - ${action[k]}_${locator[k]}`);
+                    await page.waitForTimeout(10000);
+                    screenshot = await actLib.captureScreenShot(action[k],locator[k])
+                    operation = await Docx.createP();
+                    await operation.addText(`Screenshot_${action[k]}_${locator[k]}`);
+                    await operation.addImage(screenshot, {cx: 600, cy: 250})
+                }
+                break;
                 case "Hover":
                 try{
                 let mouseHover;
@@ -339,4 +362,3 @@ for(let k = 0; k<=action.length;k++)
 })
 }
 }
-
