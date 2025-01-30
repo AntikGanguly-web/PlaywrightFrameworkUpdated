@@ -1,5 +1,6 @@
 const ExcelJS = require('exceljs');
 const { expect } = require('@playwright/test');
+const { alert } = require('vscode-websocket-alerts');
 
 class ORHandler
 {
@@ -48,7 +49,7 @@ async getORSheet(action, worksheet)
     catch(error)
     {
       alert(`Exception - ${action}_${worksheet}`);
-      await page.waitForTimeout(10000);
+      await this.page.waitForTimeout(10000);
     }
    
     const screenshot = await this.captureScreenShot(action,worksheet)    
