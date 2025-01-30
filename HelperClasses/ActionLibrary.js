@@ -23,7 +23,7 @@ async enterText(action,obName,loc,value)
 {
     await expect(this.page.locator(loc)).toBeVisible();
     await expect(this.page.locator(loc)).toBeEditable();
-    this.page.locator(loc).clear()
+    await this.page.locator(loc).clear()
     await this.highlightElement(loc);
     let cNum;
     let rNum; 
@@ -209,6 +209,14 @@ async onClickIEAddFile(action, obName, loc)
 async checkElement(action, obName, loc)
 {
     await expect(this.page.locator(loc)).toBeVisible();
+    await this.highlightElement(loc);
+    await this.page.waitForTimeout(1000);
+    screenshot = this.captureScreenShot (action,obName)
+    return screenshot;
+}
+async checkNotElement(action, obName, loc)
+{
+    await expect(this.page.locator(loc)).toHaveClass(/(^|\s)disabled(\s|$)/);
     await this.highlightElement(loc);
     await this.page.waitForTimeout(1000);
     screenshot = this.captureScreenShot (action,obName)
